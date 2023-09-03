@@ -5,7 +5,6 @@ public class salaDeCine {
 	private Integer cantdButacas;
 	private Integer cantdFilas;
 	private Boolean sala [][];
-	private Boolean salaVacia;
 	
 	public Integer getCantdButacas() {
 		return this.cantdButacas;
@@ -22,9 +21,9 @@ public class salaDeCine {
 		if (Filas * Butacas <= this.cantdMaximaButacasACrear) {
 			cantdButacasCorrecta = true;
 			this.sala = new Boolean [Butacas][Filas];
-			for (Integer f=0; f<Filas; f++) {
-				for (Integer b=0; b<Butacas; b++) {
-					this.sala [b][f] = false;
+			for (Integer fila=0; fila<Filas; fila++) {
+				for (Integer butaca=0; butaca<Butacas; butaca++) {
+					this.sala [butaca][fila] = false;
 				}
 			}
 		}
@@ -32,19 +31,19 @@ public class salaDeCine {
 	}
 	
 	public Boolean estaSalaVacia() {
-		this.salaVacia = true;
+		Boolean salaVacia = true;
 		Integer cantdAsientosVacios = 0;
-		for (Integer f=0; f<this.cantdFilas; f++) {
-			for (Integer b=0; b<this.cantdButacas; b++) {
-				if (!this.sala[b][f]) {
+		for (Integer fila=0; fila<this.cantdFilas; fila++) {
+			for (Integer butaca=0; butaca<this.cantdButacas; butaca++) {
+				if (!this.sala[butaca][fila]) {
 					cantdAsientosVacios++;
 				}
 			}
 		}
 		if (cantdAsientosVacios != this.cantdButacas * this.cantdFilas) {
-			this.salaVacia = false;
+			salaVacia = false;
 		}
-		return this.salaVacia;
+		return salaVacia;
 		
 	}
 	
@@ -67,10 +66,10 @@ public class salaDeCine {
 	
 	public Integer cantdTotalButacasOcupadas() {
 		Integer cantdAsientosOcupados = 0;
-		if (!this.salaVacia) {
-			for (Integer f=0; f<this.cantdFilas; f++) {
-				for (Integer b=0; b<this.cantdButacas; b++) {
-					if (this.sala[b][f]) {
+		if (!this.estaSalaVacia()) {
+			for (Integer fila=0; fila<this.cantdFilas; fila++) {
+				for (Integer butaca=0; butaca<this.cantdButacas; butaca++) {
+					if (this.sala[butaca][fila]) {
 						cantdAsientosOcupados++;
 						}
 					}
@@ -82,10 +81,10 @@ public class salaDeCine {
 	public void mostrarSala() {
 		Integer Filas = this.cantdFilas;
 		Integer Butacas = this.cantdButacas;
-		for (Integer f=0; f<Filas; f++) {
+		for (Integer fila=0; fila<Filas; fila++) {
 			System.out.println ("");
-			for (Integer b=0; b<Butacas; b++) {
-				System.out.println("Butaca: " + (b+1) + "/" + "Fila: " + (f+1) + " - " + "Ocupada: " + this.sala[b][f]);
+			for (Integer butaca=0; butaca<Butacas; butaca++) {
+				System.out.println("Butaca: " + (butaca+1) + "/" + "Fila: " + (fila+1) + " - " + "Ocupada: " + this.sala[butaca][fila]);
 				}
 			}
 		}
@@ -93,11 +92,11 @@ public class salaDeCine {
 	public Boolean hayEspacioPara(Integer cantdPersonas) {
 		Integer asientosLibres = 0;
 		Boolean hayAsientosContiguos = true;
-		if (!this.salaVacia) {
-			for (Integer f=0; f<this.cantdFilas; f++) {
+		if (!this.estaSalaVacia()) {
+			for (Integer fila=0; fila<this.cantdFilas; fila++) {
 				asientosLibres = 0;
-				for (Integer b=0; b<this.cantdButacas; b++) {
-					if (!this.sala[b][f]) { asientosLibres++; }
+				for (Integer butaca=0; butaca<this.cantdButacas; butaca++) {
+					if (!this.sala[butaca][fila]) { asientosLibres++; }
 				}
 				if (asientosLibres >= cantdPersonas) { break; }
 			}
